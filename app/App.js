@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, Text } from 'react-native';
+import { Navigation } from './routes';
 
 
 export default class App extends React.Component {
@@ -9,9 +9,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <SafeAreaView>
-        <Text>Hello react native</Text>
-      </SafeAreaView>
+      <Navigation />
     );
   }
 }
