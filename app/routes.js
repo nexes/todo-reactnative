@@ -1,6 +1,11 @@
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { Today } from './screens/today';
 import { NewTodoScreen } from './screens/newitem';
+import React from 'react';
+import {
+  Button
+} from 'react-native';
+
 
 
 const myDayNavigator = StackNavigator({
@@ -12,10 +17,11 @@ const myDayNavigator = StackNavigator({
   },
   AddItem: {
     screen: NewTodoScreen,
-    navigationOptions: {
+    navigationOptions: ({ navigation }) => ({
+      title: 'A new todo',
       headerLeft: null,
-      title: 'New todo',
-    }
+      headerRight: <Button title='cancel' onPress={()=> navigation.goBack()} />
+    })
   }
 },{
   initialRouteName: 'Home',
