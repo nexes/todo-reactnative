@@ -31,6 +31,7 @@ export default class NewTodoScreen extends React.Component {
     this.updateText = this.updateText.bind(this);
     this.updateDate = this.updateDate.bind(this);
     this.updateNote = this.updateNote.bind(this);
+    this.addNewItem = this.addNewItem.bind(this);
   }
 
   updateText(text) {
@@ -58,7 +59,9 @@ export default class NewTodoScreen extends React.Component {
   }
 
   addNewItem() {
+    let { navigation } = this.props;
 
+    navigation.goBack();
   }
 
   render() {
@@ -77,7 +80,7 @@ export default class NewTodoScreen extends React.Component {
         <DatePickerIOS
           date={this.state.dueDate}
           onDateChange={this.updateDate}
-          mode='date'
+          mode='datetime'
         />
         <Text style={Style.label}>Category</Text>
         <Picker
@@ -90,16 +93,14 @@ export default class NewTodoScreen extends React.Component {
         </Picker>
 
         <Text style={Style.label}>Add a note</Text>
-        <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding'>
-          <TextInput
-            style={Style.todoNote}
-            value={this.todoText}
-            autoCapitalize='sentences'
-            onChangeText={this.updateNote}
-            multiline={true}
-            editable={true}
-          />
-        </KeyboardAvoidingView>
+        <TextInput
+          style={Style.todoNote}
+          value={this.todoText}
+          autoCapitalize='sentences'
+          onChangeText={this.updateNote}
+          multiline={true}
+          editable={true}
+        />
         <Button style={Style.addButton} title='Add' onPress={this.addNewItem} />
       </SafeAreaView>
     );
