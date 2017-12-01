@@ -1,5 +1,6 @@
 import React from 'react';
 import { Style } from './style';
+import { store, Action } from '../../store/store';
 import {
   SafeAreaView,
   TextInput,
@@ -61,13 +62,17 @@ export default class NewTodoScreen extends React.Component {
   addNewItem() {
     let { navigation } = this.props;
 
+    if (this.state.todoText !== '') {
+      store.dispatch(Action.addTodo(this.state.todoText, this.state.dueDate));
+    }
+
     navigation.goBack();
   }
 
   render() {
     return (
       <SafeAreaView style={Style.container}>
-        <Text style={Style.label}>New Todo Item</Text>
+        <Text style={Style.label}>New Item</Text>
         <TextInput
           style={Style.todoTitle}
           value={this.state.todoText}
