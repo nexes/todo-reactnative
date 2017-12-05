@@ -20,7 +20,7 @@ const myDayNavigator = StackNavigator({
     navigationOptions: ({ navigation }) => ({
       title: 'A new todo',
       headerLeft: null,
-      headerRight: <Button title='cancel' onPress={()=> navigation.goBack()} />
+      headerRight: <Button title='cancel' onPress={() => navigation.goBack()} />
     })
   }
 },{
