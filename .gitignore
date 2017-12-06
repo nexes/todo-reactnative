@@ -3,6 +3,7 @@
 .DS_Store
 **/.vscode
 .eslintrc.json
+tslint.json
 
 # Xcode
 #
