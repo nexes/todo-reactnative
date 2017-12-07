@@ -12,6 +12,14 @@ export const Style = StyleSheet.create({
     height: 30,
     fontSize: 16,
     paddingLeft: 10,
-    paddingTop: 3
-  }
+    paddingTop: 3,
+  },
+  todoTextDone: {
+    width: '100%',
+    color: '#b2b2b2',
+    height: 30,
+    fontSize: 16,
+    paddingLeft: 10,
+    paddingTop: 3,
+  },
 });

@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Style } from './style';
 import {
   TouchableOpacity,
-  Image
+  Image,
 } from 'react-native';
 
 
@@ -11,18 +12,22 @@ export default class Checkbox extends React.Component {
     super(props);
 
     this.state = {
-      isFinished: false
+      isFinished: false,
     };
 
     this.toggleActive = this.toggleActive.bind(this);
   }
 
   toggleActive() {
+    let { onCheckEvent } = this.props;
+
     this.setState((prevState) => {
       return {
-        isFinished: !prevState.isFinished
+        isFinished: !prevState.isFinished,
       };
     });
+
+    if (onCheckEvent) onCheckEvent();
   }
 
   render() {
@@ -34,10 +39,13 @@ export default class Checkbox extends React.Component {
       <TouchableOpacity
         style={[Style.container, this.props.style]}
         onPress={this.toggleActive}>
-        <Image
-          source={icon}
-        />
+
+        <Image source={icon}/>
       </TouchableOpacity>
     );
   }
 }
+
+Checkbox.propTypes = {
+  onCheckEvent: PropTypes.func,
+};
