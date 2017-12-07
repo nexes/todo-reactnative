@@ -1,6 +1,6 @@
 import React from 'react';
 import { Style } from './style';
-import { store, Action } from '../../store/store';
+import { Store, Action } from '../../store/store';
 import {
   SafeAreaView,
   TextInput,
@@ -9,7 +9,6 @@ import {
   Picker,
   Button,
   KeyboardAvoidingView,
-  View
 } from 'react-native';
 
 
@@ -17,44 +16,52 @@ export default class NewTodoScreen extends React.Component {
   constructor(props) {
     super(props);
 
+    const { params } = this.props.navigation.state;
+
+    this.store = new Store();
     this.state = {
+      categoryList: params.category,
+      dueDate: new Date(),
+      category: '',
       todoText: '',
-      category: [
-        'Home',
-        'Work',
-        'School',
-        'shopping'
-      ],
       noteText: '',
-      dueDate: new Date()
     };
 
     this.updateText = this.updateText.bind(this);
     this.updateDate = this.updateDate.bind(this);
     this.updateNote = this.updateNote.bind(this);
     this.addNewItem = this.addNewItem.bind(this);
+    this.updateCategory = this.updateCategory.bind(this);
   }
 
   updateText(text) {
-    this.setState((prevState) => {
+    this.setState(() => {
       return {
-        todoText: text
+        todoText: text,
       };
     });
   }
 
   updateDate(date) {
-    this.setState((prevState) => {
+    this.setState(() => {
       return {
-        dueDate: date
+        dueDate: date,
       };
     });
   }
 
-  updateNote(text) {
-    this.setState((prevState) => {
+  updateNote(note) {
+    this.setState(() => {
       return {
-        noteText: text
+        noteText: note,
+      };
+    });
+  }
+
+  updateCategory(value) {
+    this.setState(() => {
+      return {
+        category: value,
       };
     });
   }
@@ -63,13 +70,22 @@ export default class NewTodoScreen extends React.Component {
     let { navigation } = this.props;
 
     if (this.state.todoText !== '') {
-      store.dispatch(Action.addTodo(this.state.todoText, this.state.dueDate));
+      this.store.dispatchAction(Action.addTodo({
+        category: this.state.category,
+        due: this.state.dueDate,
+        note: this.state.noteText,
+        text: this.state.todoText,
+      }));
     }
 
     navigation.goBack();
   }
 
   render() {
+    let pickerItem = this.state.categoryList.map((category, index) => {
+      return <Picker.Item key={index} value={category} label={category} />;
+    });
+
     return (
       <SafeAreaView style={Style.container}>
         <Text style={Style.label}>New Item</Text>
@@ -90,11 +106,10 @@ export default class NewTodoScreen extends React.Component {
         <Text style={Style.label}>Category</Text>
         <Picker
           itemStyle={Style.categoryPickerItem}
-          style={Style.categoryPicker}
-          selectedValue={this.state.category[0]}>
-          <Picker.Item label="test" value="test" />
-          <Picker.Item label="test1" value="test1" />
-          <Picker.Item label="test2" value="test2" />
+          onValueChange={this.updateCategory}
+          selectedValue={this.state.category}>
+
+          {pickerItem}
         </Picker>
 
         <Text style={Style.label}>Add a note</Text>
