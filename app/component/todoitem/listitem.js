@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { store, Action } from '../../store/store';
 import { Style } from './style';
 import { Checkbox } from '../checkbox';
 import {
@@ -25,11 +26,15 @@ export default class TodoItem extends React.PureComponent {
   }
 
   checkBoxSelect() {
+    //  change the style to show an item marked or not
     this.setState((prevState) => {
       return {
         strikeThrough: !prevState.strikeThrough,
       };
     });
+
+    //  update the store with the new state
+    store.dispatchAction(Action.completeTodo(this.props.value));
   }
 
   render() {
