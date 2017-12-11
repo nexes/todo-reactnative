@@ -3,6 +3,6 @@ import { StyleSheet } from 'react-native';
 
 export const Style = StyleSheet.create({
   container: {
-    padding: 3
-  }
+    padding: 3,
+  },
 });

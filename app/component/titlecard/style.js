@@ -6,12 +6,12 @@ export const Styles = StyleSheet.create({
     color: 'white',
     fontSize: 28,
     paddingLeft: 20,
-    top: '65%'
+    top: '65%',
   },
   timeText: {
     color: 'white',
     fontSize: 18,
     paddingLeft: 20,
-    top: '70%'
-  }
+    top: '75%',
+  },
 });
