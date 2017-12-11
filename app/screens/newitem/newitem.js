@@ -1,6 +1,6 @@
 import React from 'react';
 import { Style } from './style';
-import { Store, Action } from '../../store/store';
+import { store, Action } from '../../store/store';
 import {
   SafeAreaView,
   TextInput,
@@ -15,10 +15,8 @@ import {
 export default class NewTodoScreen extends React.Component {
   constructor(props) {
     super(props);
-
     const { params } = this.props.navigation.state;
 
-    this.store = new Store();
     this.state = {
       categoryList: params.category,
       dueDate: new Date(),
@@ -70,7 +68,7 @@ export default class NewTodoScreen extends React.Component {
     let { navigation } = this.props;
 
     if (this.state.todoText !== '') {
-      this.store.dispatchAction(Action.addTodo({
+      store.dispatchAction(Action.addTodo({
         category: this.state.category,
         due: this.state.dueDate,
         note: this.state.noteText,
@@ -87,6 +85,7 @@ export default class NewTodoScreen extends React.Component {
     });
 
     return (
+      //  TODO: add keyboard safe area to move view up for keyboard
       <SafeAreaView style={Style.container}>
         <Text style={Style.label}>New Item</Text>
         <TextInput
