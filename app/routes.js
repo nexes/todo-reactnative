@@ -1,6 +1,7 @@
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { Today } from './screens/today';
 import { NewTodoScreen } from './screens/newitem';
+import { Category } from './screens/category';
 import React from 'react';
 import {
   Button,
@@ -31,6 +32,9 @@ const myDayNavigator = StackNavigator({
 const tabNavigator = TabNavigator({
   Today: {
     screen: myDayNavigator,
+  },
+  List: {
+    screen: Category,
   },
 });
 
