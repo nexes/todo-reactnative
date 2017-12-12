@@ -10,7 +10,7 @@ export const ActionType = {
  * @param {string} text the title of the category
  * @return {action}     the action for the reducer
  */
-export function addCategory(text) {
+export function add(text) {
   return {
     type: ActionType.ADD_CATEGORY,
     text,
@@ -23,7 +23,7 @@ export function addCategory(text) {
  * @param  {string} text the category title to remove
  * @return {action}      the action for the reducer
  */
-export function removeCategory(text) {
+export function remove(text) {
   return {
     type: ActionType.REMOVE_CATEGORY,
     text,
@@ -37,7 +37,7 @@ export function removeCategory(text) {
  * @param  {string} newTitle the new title of the category
  * @return {action}          the action for the reducer
  */
-export function renameCategory(title, newTitle) {
+export function rename(title, newTitle) {
   return {
     type: ActionType.RENAME_CATEGORY,
     text: title,

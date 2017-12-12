@@ -10,7 +10,7 @@ export const ActionType = {
  * @param {object} todoObj  the new todo object, keys - text: string, date: date, category: string, note: string
  * @return {action}      the action object used by the reducers
  */
-export function addTodo(todoObj) {
+export function add(todoObj) {
   return {
     type: ActionType.ADD_TODO,
     text: todoObj.text,
@@ -25,7 +25,7 @@ export function addTodo(todoObj) {
  * @param  {string} text the todo text that will be removed from the list of todos
  * @return {action}      the action object used by the reducers
  */
-export function removeTodo(text) {
+export function remove(text) {
   return {
     type: ActionType.REMOVE_TODO,
     text,
@@ -37,7 +37,7 @@ export function removeTodo(text) {
  * @param  {string} text the todo text that will be marked as complete
  * @return {action}      the action object used by the reducers
  */
-export function completeTodo(text) {
+export function complete(text) {
   return {
     type: ActionType.COMPLETE_TODO,
     text,
