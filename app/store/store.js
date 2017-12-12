@@ -1,7 +1,8 @@
 import { createStore, combineReducers } from 'redux';
 import { todoItem } from './reducer/todoreducer';
 import { categories } from './reducer/categoryreducer';
-import * as actions from './action/todoaction';
+import * as todActions from './action/todoaction';
+import * as categoryAction from './action/categoryaction';
 
 
 const initialState = {
@@ -76,4 +77,5 @@ class Store {
 }
 
 export const store = new Store();
-export { actions as Action };
+export { todActions as TodoAction };
+export { categoryAction as CategoryAction };
