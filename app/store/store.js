@@ -1,5 +1,6 @@
 import { createStore, combineReducers } from 'redux';
 import { todoItem } from './reducer/todoreducer';
+import { categories } from './reducer/categoryreducer';
 import * as actions from './action/todoaction';
 
 
@@ -15,6 +16,13 @@ const initialState = {
       }
     */
   ],
+  category: [
+  /*
+    {
+      text: the category title,
+    }
+   */
+  ],
 };
 
 
@@ -22,6 +30,7 @@ class Store {
   constructor() {
     this.reduxStore = createStore(combineReducers({
       todo: todoItem,
+      category: categories,
     }), initialState);
 
     this.unsubscribe = undefined;
@@ -41,6 +50,16 @@ class Store {
     return this.reduxStore.getState();
   }
 
+  getTodoItems() {
+    const { todo } = this.reduxStore.getState();
+    return todo;
+  }
+
+  getTodoCategories() {
+    const { category } = this.reduxStore.getState();
+    return category;
+  }
+
   dispatchAction(action) {
     if (action) {
       this.reduxStore.dispatch(action);
@@ -54,7 +73,6 @@ class Store {
   retrieveStateFromDevice() {
     //  TODO get redux state from the device
   }
-
 }
 
 export const store = new Store();
