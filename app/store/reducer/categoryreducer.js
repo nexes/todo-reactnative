@@ -8,6 +8,8 @@ export function categories(prevState = [], action) {
         ...prevState,
         {
           text: action.text,
+          color: action.color,
+          count: 0,
         },
       ];
 

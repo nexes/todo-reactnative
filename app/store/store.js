@@ -21,6 +21,8 @@ const initialState = {
   /*
     {
       text: the category title,
+      color: the color code for the category,
+      count: the number of todo items that uses this category
     }
    */
   ],

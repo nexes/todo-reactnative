@@ -7,13 +7,14 @@ export const ActionType = {
 
 /**
  * add a new category action
- * @param {string} text the title of the category
+ * @param {object} catObj an object representing a new category, {text: the text, color: the color}
  * @return {action}     the action for the reducer
  */
-export function add(text) {
+export function add(catObj) {
   return {
     type: ActionType.ADD_CATEGORY,
-    text,
+    text: catObj.text,
+    color: catObj.color,
   };
 }
 
