@@ -2,6 +2,7 @@ export const ActionType = {
   ADD_CATEGORY: 'add_category',
   REMOVE_CATEGORY: 'remove_category',
   RENAME_CATEGORY: 'rename_category',
+  COLOR_CATEGORY: 'color_category',
 };
 
 
@@ -43,5 +44,20 @@ export function rename(title, newTitle) {
     type: ActionType.RENAME_CATEGORY,
     text: title,
     newText: newTitle,
+  };
+}
+
+
+/**
+ * change the color of the category
+ * @param  {string} title the title of the category that needs the color changed
+ * @param  {string} color the name of the color e.g 'red', '#ff0000'
+ * @return {action}       the action for the reducer
+ */
+export function changeColor(title, color) {
+  return {
+    type: ActionType.COLOR_CATEGORY,
+    text: title,
+    color,
   };
 }
