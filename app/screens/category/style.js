@@ -11,7 +11,7 @@ export const style = StyleSheet.create({
     backgroundColor: '#1976d2',
   },
   categoryList: {
-    flex: 1,
+    flex: 4,
     backgroundColor: '#e8e8e8',
   },
 });

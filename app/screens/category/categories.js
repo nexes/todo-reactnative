@@ -1,4 +1,5 @@
 import React from 'react';
+import { CategoryItem } from '../../component/categoryitem';
 import { store } from '../../store/store';
 import { TimeAndTitle } from '../../component/titlecard';
 import { style } from './style';
@@ -6,6 +7,7 @@ import {
   SafeAreaView,
   Text,
   FlatList,
+  KeyboardAvoidingView,
 } from 'react-native';
 
 
@@ -24,7 +26,7 @@ export default class Categories extends React.Component {
 
   listRenderItem({ item }) {
     return (
-      <Text>{item.text}</Text>
+      <CategoryItem value={item.text} color={item.color} count={item.count}/>
     );
   }
 
@@ -32,13 +34,14 @@ export default class Categories extends React.Component {
     return (
       <SafeAreaView style={style.container}>
         <TimeAndTitle style={style.todayCard} title='Todo categories'/>
-        <FlatList
-          style={style.categoryList}
-          keyExtractor={this.listKeyItem}
-          renderItem={this.listRenderItem}
-          extraDate={this.state}
-          data={this.state.categories}
-        />
+        <KeyboardAvoidingView style={style.categoryList}>
+          <FlatList
+            keyExtractor={this.listKeyItem}
+            renderItem={this.listRenderItem}
+            extraDate={this.state}
+            data={this.state.categories}
+          />
+        </KeyboardAvoidingView>
       </SafeAreaView>
     );
   }
