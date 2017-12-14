@@ -26,6 +26,15 @@ export function todoItem(prevState = [], action) {
         return item;
       });
 
+    case ActionType.CATEGORY_SET_TODO:
+      return prevState.map((value) => {
+        if (value.text === action.text) {
+          value.category = action.category;
+        }
+
+        return value;
+      });
+
     default:
       return prevState;
   }

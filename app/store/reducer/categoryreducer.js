@@ -1,22 +1,23 @@
-import { ActionType } from '../action/categoryaction';
+import { ActionType as CategoryAction} from '../action/categoryaction';
+import { ActionType as TodoAction} from '../action/todoaction';
 
 
 export function categories(prevState = [], action) {
   switch (action.type) {
-    case ActionType.ADD_CATEGORY:
-    return [
-    ...prevState,
-    {
-      text: action.text,
-      color: action.color,
-      count: 0,
-    },
-    ];
+    case CategoryAction.ADD_CATEGORY:
+      return [
+        ...prevState,
+        {
+          text: action.text,
+          color: action.color,
+          count: 0,
+        },
+      ];
 
-    case ActionType.REMOVE_CATEGORY:
+    case CategoryAction.REMOVE_CATEGORY:
       return prevState.filter(value => value.text !== action.text);
 
-    case ActionType.RENAME_CATEGORY:
+    case CategoryAction.RENAME_CATEGORY:
       return prevState.map((value) => {
         if (value.text === action.text) {
           value.text = action.newText;
@@ -25,7 +26,7 @@ export function categories(prevState = [], action) {
         return value;
       });
 
-    case ActionType.COLOR_CATEGORY:
+    case CategoryAction.COLOR_CATEGORY:
       return prevState.map((value) => {
         if (value.text === action.text) {
           value.color = action.color;
@@ -34,6 +35,17 @@ export function categories(prevState = [], action) {
         return value;
       });
 
+      //  when a todo item changes category, we need to increment that categories count
+      //  we need to do this when a new todo is added as well.
+      case TodoAction.CATEGORY_SET_TODO:
+      case TodoAction.ADD_TODO:
+        return prevState.map((value) => {
+          if (value.text === action.category) {
+            value.count++;
+          }
+
+          return value;
+        });
 
     default:
       return prevState;

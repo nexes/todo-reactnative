@@ -2,6 +2,7 @@ export const ActionType = {
   ADD_TODO: 'add_todo',
   REMOVE_TODO: 'remove_todo',
   COMPLETE_TODO: 'complete_todo',
+  CATEGORY_SET_TODO: 'category_todo',
 };
 
 
@@ -40,6 +41,21 @@ export function remove(text) {
 export function complete(text) {
   return {
     type: ActionType.COMPLETE_TODO,
+    text,
+  };
+}
+
+
+/**
+ * change or set the category of a todo item
+ * @param  {string} text        the todo title we want to change
+ * @param  {string} newCategory the category name we want to change to
+ * @return {action}             the action for the reducers
+ */
+export function category(text, newCategory) {
+  return {
+    type: ActionType.CATEGORY_SET_TODO,
+    category: newCategory,
     text,
   };
 }
