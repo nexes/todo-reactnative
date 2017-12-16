@@ -1,8 +1,8 @@
 export const ActionType = {
-  ADD_TODO: 'add_todo',
-  REMOVE_TODO: 'remove_todo',
-  COMPLETE_TODO: 'complete_todo',
-  CATEGORY_SET_TODO: 'category_todo',
+	ADD_TODO: 'add_todo',
+	REMOVE_TODO: 'remove_todo',
+	COMPLETE_TODO: 'complete_todo',
+	CATEGORY_SET_TODO: 'category_todo',
 };
 
 
@@ -12,13 +12,13 @@ export const ActionType = {
  * @return {action}      the action object used by the reducers
  */
 export function add(todoObj) {
-  return {
-    type: ActionType.ADD_TODO,
-    text: todoObj.text,
-    date: todoObj.due,
-    category: todoObj.category,
-    note: todoObj.note,
-  };
+	return {
+		type: ActionType.ADD_TODO,
+		text: todoObj.text,
+		date: todoObj.due,
+		category: todoObj.category,
+		note: todoObj.note,
+	};
 }
 
 /**
@@ -27,10 +27,10 @@ export function add(todoObj) {
  * @return {action}      the action object used by the reducers
  */
 export function remove(text) {
-  return {
-    type: ActionType.REMOVE_TODO,
-    text,
-  };
+	return {
+		type: ActionType.REMOVE_TODO,
+		text,
+	};
 }
 
 /**
@@ -39,10 +39,10 @@ export function remove(text) {
  * @return {action}      the action object used by the reducers
  */
 export function complete(text) {
-  return {
-    type: ActionType.COMPLETE_TODO,
-    text,
-  };
+	return {
+		type: ActionType.COMPLETE_TODO,
+		text,
+	};
 }
 
 
@@ -53,9 +53,9 @@ export function complete(text) {
  * @return {action}             the action for the reducers
  */
 export function category(text, newCategory) {
-  return {
-    type: ActionType.CATEGORY_SET_TODO,
-    category: newCategory,
-    text,
-  };
+	return {
+		type: ActionType.CATEGORY_SET_TODO,
+		category: newCategory,
+		text,
+	};
 }

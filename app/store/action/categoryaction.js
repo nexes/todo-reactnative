@@ -1,8 +1,8 @@
 export const ActionType = {
-  ADD_CATEGORY: 'add_category',
-  REMOVE_CATEGORY: 'remove_category',
-  RENAME_CATEGORY: 'rename_category',
-  COLOR_CATEGORY: 'color_category',
+	ADD_CATEGORY: 'add_category',
+	REMOVE_CATEGORY: 'remove_category',
+	RENAME_CATEGORY: 'rename_category',
+	COLOR_CATEGORY: 'color_category',
 };
 
 
@@ -12,11 +12,11 @@ export const ActionType = {
  * @return {action}     the action for the reducer
  */
 export function add(catObj) {
-  return {
-    type: ActionType.ADD_CATEGORY,
-    text: catObj.text,
-    color: catObj.color,
-  };
+	return {
+		type: ActionType.ADD_CATEGORY,
+		text: catObj.text,
+		color: catObj.color,
+	};
 }
 
 
@@ -26,10 +26,10 @@ export function add(catObj) {
  * @return {action}      the action for the reducer
  */
 export function remove(text) {
-  return {
-    type: ActionType.REMOVE_CATEGORY,
-    text,
-  };
+	return {
+		type: ActionType.REMOVE_CATEGORY,
+		text,
+	};
 }
 
 
@@ -40,11 +40,11 @@ export function remove(text) {
  * @return {action}          the action for the reducer
  */
 export function rename(title, newTitle) {
-  return {
-    type: ActionType.RENAME_CATEGORY,
-    text: title,
-    newText: newTitle,
-  };
+	return {
+		type: ActionType.RENAME_CATEGORY,
+		text: title,
+		newText: newTitle,
+	};
 }
 
 
@@ -55,9 +55,9 @@ export function rename(title, newTitle) {
  * @return {action}       the action for the reducer
  */
 export function changeColor(title, color) {
-  return {
-    type: ActionType.COLOR_CATEGORY,
-    text: title,
-    color,
-  };
+	return {
+		type: ActionType.COLOR_CATEGORY,
+		text: title,
+		color,
+	};
 }
