@@ -21,6 +21,7 @@
 	},
 	"jest": {
 		"preset": "react-native",
-		"testEnvironment": "node"
+		"testEnvironment": "node",
+		"verbose": true
 	}
 }

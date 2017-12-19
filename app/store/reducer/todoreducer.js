@@ -3,7 +3,7 @@ import { ActionType as CategoryAction} from '../action/categoryaction';
 
 
 export function todoItem(prevState = [], action) {
-	switch (action.type) {
+ 	switch (action.type) {
 		case TodoAction.ADD_TODO:
 			return [
 				...prevState,
