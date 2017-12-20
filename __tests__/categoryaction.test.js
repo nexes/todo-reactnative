@@ -20,7 +20,7 @@ describe('Testing category actions', () => {
 		store.dispatchAction(Actions.remove(myCategory.text));
 
 		const category = store.getTodoCategories();
-		expect(category).toHaveLength(0)
+		expect(category).toHaveLength(0);
 	});
 
 	test('renaming a category', () => {
