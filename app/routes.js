@@ -1,7 +1,7 @@
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { Today } from './screens/today';
-import { NewTodoScreen } from './screens/newitem';
 import { Category } from './screens/category';
+import NewTodoScreen from './screens/newitem';
 import React from 'react';
 import {
 	Button,
