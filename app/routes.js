@@ -4,38 +4,38 @@ import { NewTodoScreen } from './screens/newitem';
 import { Category } from './screens/category';
 import React from 'react';
 import {
-  Button,
+	Button,
 } from 'react-native';
 
 
 const myDayNavigator = StackNavigator({
-  Home: {
-    screen: Today,
-    navigationOptions: {
-      headerStyle: {display: 'none'},
-    },
-  },
-  AddItem: {
-    screen: NewTodoScreen,
-    navigationOptions: ({ navigation }) => ({
-      title: 'A new todo',
-      headerLeft: null,
-      headerRight: <Button title='cancel' onPress={() => navigation.goBack()} />,
-    }),
-  },
+	Home: {
+		screen: Today,
+		navigationOptions: {
+			headerStyle: {display: 'none'},
+		},
+	},
+	AddItem: {
+		screen: NewTodoScreen,
+		navigationOptions: ({ navigation }) => ({
+			title: 'A new todo',
+			headerLeft: null,
+			headerRight: <Button title='cancel' onPress={() => navigation.goBack()} />,
+		}),
+	},
 },
 {
-  initialRouteName: 'Home',
-  mode: 'modal',
+	initialRouteName: 'Home',
+	mode: 'modal',
 });
 
 const tabNavigator = TabNavigator({
-  Today: {
-    screen: myDayNavigator,
-  },
-  List: {
-    screen: Category,
-  },
+	Today: {
+		screen: myDayNavigator,
+	},
+	List: {
+		screen: Category,
+	},
 });
 
 

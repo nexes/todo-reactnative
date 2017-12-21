@@ -3,13 +3,13 @@ import { Navigation } from './routes';
 
 
 export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+	constructor(props) {
+		super(props);
+	}
 
-  render() {
-    return (
-      <Navigation/>
-    );
-  }
+	render() {
+		return (
+			<Navigation/>
+		);
+	}
 }
