@@ -55,6 +55,20 @@ function todoItemByTitle(prevState = {}, action) {
 				}
 			};
 
+		case CategoryAction.REMOVE_CATEGORY:
+			let todoKeys = Object.keys(prevState);
+
+			return todoKeys.reduce((newState, current) => {
+				let currentTodo = prevState[current];
+
+				if (currentTodo.category === action.title) {
+					currentTodo.category = null;
+				}
+
+				newState[current] = currentTodo;
+				return newState;
+			}, {});
+
 		case CategoryAction.RENAME_CATEGORY:
 			for (let [key, value] of Object.entries(prevState)) {
 				if (value.category === action.title) {

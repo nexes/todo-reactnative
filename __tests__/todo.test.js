@@ -67,3 +67,15 @@ describe('Removing todo items, testing category count', () => {
 		expect(categories.byTitle['Home'].items).toEqual(expect.arrayContaining(testList));
 	});
 });
+
+describe('Remove a category, check todo items category', () => {
+	test('removing category Home', () => {
+		store.dispatch(CategoryAction.remove('Home'));
+
+		const { todos, categories } = store.getState();
+
+		for (const [item, value] of Object.entries(todos)) {
+			expect(value.category).not.toBe('Home');
+		}
+	});
+});
