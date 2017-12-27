@@ -1,38 +1,42 @@
 import { createStore, combineReducers } from 'redux';
-import { todoItem } from './reducer/todoreducer';
-import { categories } from './reducer/categoryreducer';
+import { todoReducers } from './reducer/todoreducer';
+import { categoryReducer } from './reducer/categoryreducer';
 import * as todActions from './action/todoaction';
 import * as categoryAction from './action/categoryaction';
 
 
 const initialState = {
-	todo: [
-		/*
-			{
-				text: the todo title,
-				note: the todo detail if any,
-				due: the due date if any,
-				category: the category of the todo item if any,
-				completed: if the todo is finished
-			}
-		*/
-	],
-	category: [
-	/*
-		{
-			text: the category title,
-			color: the color code for the category,
-			count: the number of todo items that uses this category
+	todos: {
+		byTitle: {
+			/*
+				'theTitle': {
+					'note': the todo note,
+					'due': the todo due date,
+					'category': the todo category: default null,
+					'completed': the todo completed flag
+				},
+				...
+			*/
 		}
-	 */
-	],
+	},
+	categories: {
+		byTitle: {
+			/*
+				'theTitle': {
+					'color': the category color,
+					'items: ['todoByTitle, ...] the title of the todo item
+				},
+				...
+			*/
+		}
+	}
 };
 
-
 export const store = createStore(combineReducers({
-	todo: todoItem,
-	category: categories,
+	todos: todoReducers,
+	categories: categoryReducer,
 }), initialState);
+
 
 export { todActions as TodoAction };
 export { categoryAction as CategoryAction };

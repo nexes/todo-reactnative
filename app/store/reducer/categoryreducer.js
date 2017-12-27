@@ -1,51 +1,89 @@
-import { ActionType as CategoryAction} from '../action/categoryaction';
-import { ActionType as TodoAction} from '../action/todoaction';
+import { combineReducers } from 'redux';
+import { ActionType as CategoryAction } from '../action/categoryaction';
+import { ActionType as TodoAction } from '../action/todoaction';
 
 
-export function categories(prevState = [], action) {
+function categoryByTitle(prevState = {}, action) {
 	switch (action.type) {
 		case CategoryAction.ADD_CATEGORY:
-			return [
+			return {
 				...prevState,
-				{
-					text: action.text,
+				[action.title]: {
 					color: action.color,
-					count: 0,
-				},
-			];
+					items: []
+				}
+			};
 
 		case CategoryAction.REMOVE_CATEGORY:
-			return prevState.filter(value => value.text !== action.text);
+			let keys = Object.keys(prevState);
+
+			return keys.reduce((newState, current) => {
+				if (current !== action.title) {
+					newState[current] = prevState[current];
+				}
+
+				return newState;
+			}, {});
 
 		case CategoryAction.RENAME_CATEGORY:
-			return prevState.map((value) => {
-				if (value.text === action.text) {
-					value.text = action.newText;
+			keys = Object.keys(prevState);
+
+			return keys.reduce((newState, current) => {
+				if (action.title === current) {
+					newState[action.newTitle] = prevState[current];
+				} else {
+					newState[current] = prevState[current];
 				}
 
-				return value;
-			});
+				return newState;
+			}, {});
 
 		case CategoryAction.COLOR_CATEGORY:
-			return prevState.map((value) => {
-				if (value.text === action.text) {
-					value.color = action.color;
+			return {
+				...prevState,
+				[action.title]: {
+					...prevState[action.title],
+					color: action.color
 				}
+			};
 
-				return value;
-			});
-
-		case TodoAction.CATEGORY_SET_TODO:
 		case TodoAction.ADD_TODO:
-			return prevState.map((value) => {
-				if (value.text === action.category) {
-					value.count++;
-				}
+			let catData = prevState[action.category];
 
-				return value;
-			});
+			if (!catData)
+				return prevState;
+
+			catData.items.push(action.title);
+
+			return {
+				...prevState,
+				[action.category]: {
+					...catData
+				}
+			};
+
+		case TodoAction.REMOVE_TODO:
+			for (let [key, value] of Object.entries(prevState)) {
+				let index = value.items.indexOf(action.title);
+
+				if (index !== -1) {
+					value.items.splice(index, 1);
+
+					return {
+						...prevState,
+						[key]: {
+							...value
+						}
+					};
+				}
+			}
+			return prevState;
 
 		default:
 			return prevState;
 	}
 }
+
+export const categoryReducer = combineReducers({
+	byTitle: categoryByTitle
+});

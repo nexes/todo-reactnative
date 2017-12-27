@@ -1,60 +1,82 @@
+import { combineReducers } from 'redux';
 import { ActionType as TodoAction } from '../action/todoaction';
-import { ActionType as CategoryAction} from '../action/categoryaction';
+import { ActionType as CategoryAction } from '../action/categoryaction';
 
 
-export function todoItem(prevState = [], action) {
- 	switch (action.type) {
+function todoItemByTitle(prevState = {}, action) {
+	switch (action.type) {
 		case TodoAction.ADD_TODO:
-			return [
+			return {
 				...prevState,
-				{
-					text: action.text,
-					due: action.date,
+				[action.title]: {
 					note: action.note,
+					due: action.due,
 					category: action.category,
 					completed: false,
-				},
-			];
+				}
+			};
 
 		case TodoAction.REMOVE_TODO:
-			return prevState.filter(todo => todo.text !== action.text);
+			let keys = Object.keys(prevState)
+
+			return keys.reduce((result, current) => {
+				if (action.title !== current) {
+					result[current] = prevState[current];
+				}
+
+				return result;
+			}, {});
+
 
 		case TodoAction.COMPLETE_TODO:
-			return prevState.map((item) => {
-				if (item.text === action.text) {
-					item.completed = !item.completed;
+			return {
+				...prevState,
+				[action.title]: {
+					...prevState[action.title],
+					completed: true
 				}
-				return item;
-			});
+			};
+
+		case TodoAction.DATE_SET_TODO:
+			return {
+				...prevState,
+				[action.title]: {
+					...prevState[action.title],
+					due: action.date
+				}
+			};
 
 		case TodoAction.CATEGORY_SET_TODO:
-			return prevState.map((value) => {
-				if (value.text === action.text) {
-					value.category = action.category;
+			return {
+				...prevState,
+				[action.title]: {
+					...prevState[action.title],
+					category: action.category
 				}
-
-				return value;
-			});
-
-		case CategoryAction.REMOVE_CATEGORY:
-			return prevState.map((value) => {
-				if (value.category === action.text) {
-					value.category = 'Today';
-				}
-
-				return value;
-			});
+			};
 
 		case CategoryAction.RENAME_CATEGORY:
-			return prevState.map((value) => {
-				if (value.category === action.text) {
-					value.category = action.newText;
-				}
+			for (let [key, value] of Object.entries(prevState)) {
+				if (value.category === action.title) {
+					value.category = action.newTitle;
 
-				return value;
-			});
+					return {
+						...prevState,
+						[key]: {
+							...value
+						}
+					};
+				}
+			}
+
+			return prevState;
 
 		default:
 			return prevState;
 	}
 }
+
+
+export const todoReducers = combineReducers({
+	byTitle: todoItemByTitle
+})

@@ -8,13 +8,13 @@ export const ActionType = {
 
 /**
  * add a new category action
- * @param {object} catObj an object representing a new category, {text: the text, color: the color}
+ * @param {object} catObj an object representing a new category, {title: the title, color: the color}
  * @return {action}     the action for the reducer
  */
 export function add(catObj) {
 	return {
 		type: ActionType.ADD_CATEGORY,
-		text: catObj.text,
+		title: catObj.title,
 		color: catObj.color,
 	};
 }
@@ -22,13 +22,13 @@ export function add(catObj) {
 
 /**
  * remove a category action
- * @param  {string} text the category title to remove
+ * @param  {string} title the category title to remove
  * @return {action}      the action for the reducer
  */
-export function remove(text) {
+export function remove(title) {
 	return {
 		type: ActionType.REMOVE_CATEGORY,
-		text,
+		title,
 	};
 }
 
@@ -42,8 +42,8 @@ export function remove(text) {
 export function rename(title, newTitle) {
 	return {
 		type: ActionType.RENAME_CATEGORY,
-		text: title,
-		newText: newTitle,
+		title,
+		newTitle,
 	};
 }
 
@@ -57,7 +57,7 @@ export function rename(title, newTitle) {
 export function changeColor(title, color) {
 	return {
 		type: ActionType.COLOR_CATEGORY,
-		text: title,
+		title,
 		color,
 	};
 }
