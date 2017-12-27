@@ -2,42 +2,79 @@ import { store } from '../app/store/store';
 import * as Actions from '../app/store/action/todoaction';
 
 
-const myTodo = {
-	text: 'wash dishes',
-	category: 'home',
-	note: 'do it good'
-};
+beforeAll(() => {
+	store.dispatch(Actions.add({
+		title: 'work on code',
+		due: 'tomorrow',
+		category: 'Work'
+	}));
 
-beforeEach(() => {
-	store.dispatchAction(Actions.add(myTodo));
+	store.dispatch(Actions.add({
+		title: 'write tests',
+		due: 'today',
+		category: 'Work'
+	}));
+
+	store.dispatch(Actions.add({
+		title: 'buy headphones',
+		due: 'tomorrow',
+		category: 'Home'
+	}));
+
+	store.dispatch(Actions.add({
+		title: 'buy new computer',
+		due: 'today',
+		category: 'Home'
+	}));
 });
 
-describe('Testing todo actions', () => {
-	test('adding a todo item', () => {
-		const todo = store.getTodoItems();
+describe('Test adding todo item actions', () => {
+	test('Adding three todo items', () => {
 
-		expect(todo).toHaveLength(1);
-		expect(todo[0]).toMatchObject(myTodo);
+		const { todos } = store.getState();
+		expect(Object.keys(todos.byTitle).length).toBe(4);
 	});
+});
 
-	test('removing a todo item', () => {
-		store.dispatchAction(Actions.remove(myTodo.text));
+describe('Test removing todo item actions', () => {
+	test('Removing two todo items', () => {
+		store.dispatch(Actions.remove('buy headphones'));
+		store.dispatch(Actions.remove('write tests'));
 
-		const todo = store.getTodoItems();
-		expect(todo).toEqual([]);
+		const { todos } = store.getState();
+		expect(Object.keys(todos.byTitle).length).toBe(2);
 	});
+});
 
-	test('completing a todo item', () => {
-		store.dispatchAction(Actions.complete(myTodo.text));
+describe('Test completing todo item action', () => {
+	test('Complete a todo item', () => {
+		store.dispatch(Actions.complete('work on code'));
 
-		const todo = store.getTodoItems();
-		expect(todo[0].completed).toBeTruthy();
+		const { todos } = store.getState();
+		expect(todos.byTitle['work on code'].completed).toBeTruthy();
 	});
+});
 
-	test('changing a todo category', () => {
-		store.dispatchAction(Actions.category(myTodo.text, 'School'));
+describe('Test the due date of a todo item', () => {
+	test('Change the due date to tomorrow', () => {
+		store.dispatch(Actions.dueDate('buy new computer', 'wednesday'));
 
-		const todo = store.getTodoItems();
-		expect(todo[0].category).toBe('School');
+		const { todos } = store.getState();
+		const todoItem = todos.byTitle['buy new computer'];
+
+		expect(todoItem.due).toBe('wednesday');
+	});
+});
+
+describe('Test category changes of a todo item', () => {
+	test('Change category to Code', () => {
+		store.dispatch(Actions.category('work on code', 'Code'));
+		store.dispatch(Actions.category('buy new computer', 'Code'));
+
+		const { todos } = store.getState();
+
+		for (let [key, value] of Object.entries(todos.byTitle)) {
+			expect(value.category).toBe('Code');
+		}
 	});
 });

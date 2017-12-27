@@ -6,98 +6,64 @@ import {
 
 
 beforeAll(() => {
-	//	creating some categories
-	store.dispatchAction(CategoryAction.add({
-		text: 'Home',
+	store.dispatch(CategoryAction.add({
+		title: 'Home',
 		color: 'red'
 	}));
-	store.dispatchAction(CategoryAction.add({
-		text: 'Money',
+
+	store.dispatch(CategoryAction.add({
+		title: 'Work',
 		color: 'green'
 	}));
 
-	//	creating some todo items
-	store.dispatchAction(TodoAction.add({
-		text: 'wash car',
-		date: 'today',
+	store.dispatch(TodoAction.add({
+		title: 'wash car',
+		due: 'today',
 		category: 'Home'
 	}));
-	store.dispatchAction(TodoAction.add({
-		text: 'sell car',
-		date: 'tommorow',
+
+	store.dispatch(TodoAction.add({
+		title: 'sell car',
+		due: 'tommorow',
 		category: 'Home'
 	}));
-	store.dispatchAction(TodoAction.add({
-		text: 'buy bitcoin',
-		date: 'today',
+
+	store.dispatch(TodoAction.add({
+		title: 'buy bitcoin',
+		due: 'today',
 		category: 'Home'
+	}));
+
+	store.dispatch(TodoAction.add({
+		title: 'finish TPS report',
+		due: 'yesterday',
+		category: 'Work'
 	}));
 
 });
 
+describe('Initial store tests ', () => {
+	test('Test our category counts', () => {
+		const { categories } = store.getState();
 
-describe('Testing todo and category relationship', () => {
-	test('Renaming a category, checking todo changes', () => {
-		store.dispatchAction(CategoryAction.rename('Home', 'Fun'));
-		const todos = store.getTodoItems();
+		expect(categories.byTitle['Home'].items.length).toBe(3);
+	});
 
-		for (let todo of todos) {
-			expect(todo.category).toBe('Fun');
-		}
+	test('Test the category todo list', () => {
+		const { categories } = store.getState();
+		const testList = ['wash car', 'sell car', 'buy bitcoin']
+
+		expect(categories.byTitle['Home'].items).toEqual(expect.arrayContaining(testList));
 	});
 });
 
-describe('Testing todo category when the category is removed', () => {
-	test('Deleting category Fun', () => {
-		store.dispatchAction(CategoryAction.remove('Fun'));
-		const { todo, category } = store.currentState();
+describe('Removing todo items, testing category count', () => {
+	test('removing a todo item', () => {
+		store.dispatch(TodoAction.remove('sell car'));
 
-		for (let todoItem of todo) {
-			expect(todoItem.category).toBe('Today');
-		}
+		const { categories } = store.getState();
+		const testList = ['wash car', 'buy bitcoin']
 
-		for (let categoryItem of category) {
-			expect(['Today', 'Money']).toContain(categoryItem.text);
-		}
-	});
-});
-
-describe('Testing the cateogry todo count', () => {
-	test('add a new todo item to a category', () => {
-		let category = store.getTodoCategories();
-
-		for (let c of category) {
-			if (c.text === 'Today') {
-				expect(c.count).toBe(3);
-			}
-		}
-
-		store.dispatchAction(TodoAction.add({ text: 'watch movie', date: 'tomorrow', category: 'Today' }));
-
-		category = store.getTodoCategories();
-		for (let c of category) {
-			if (c.text === 'Today') {
-				expect(c.count).toBe(4);
-			}
-		}
-	});
-
-	test('remove a todo item from a category', () => {
-		let category = store.getTodoCategories();
-
-		for (let c of category) {
-			if (c.text === 'Today') {
-				expect(c.count).toBe(4);
-			}
-		}
-
-		store.dispatchAction(TodoAction.remove('watch movie'));
-
-		category = store.getTodoCategories();
-		for (let c of category) {
-			if (c.text === 'Today') {
-				expect(c.count).toBe(3);
-			}
-		}
+		expect(categories.byTitle['Home'].items).toEqual(expect.arrayContaining(testList));
 	});
 });

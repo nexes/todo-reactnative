@@ -2,40 +2,67 @@ import { store } from '../app/store/store';
 import * as Actions from '../app/store/action/categoryaction';
 
 
-const myCategory = {
-	text: 'Work',
-	color: '#ff0000',
-};
+beforeAll(() => {
+	store.dispatch(Actions.add({
+		title: 'Work',
+		color: 'red'
+	}));
 
-describe('Testing category actions', () => {
-	test('adding a new category', () => {
-		store.dispatchAction(Actions.add(myCategory));
+	store.dispatch(Actions.add({
+		title: 'School',
+		color: 'blue'
+	}));
 
-		const category = store.getTodoCategories();
-		expect(category).toHaveLength(1);
-		expect(category[0]).toMatchObject(myCategory);
+	store.dispatch(Actions.add({
+		title: 'Food',
+		color: 'yellow'
+	}));
+});
+
+describe('Test add categories', () => {
+	test('adding three categories', () => {
+		const { categories } = store.getState();
+
+		expect(Object.keys(categories.byTitle).length).toBe(3);
 	});
+});
 
-	test('removing a category', () => {
-		store.dispatchAction(Actions.remove(myCategory.text));
+describe('Test remove a category', () => {
+	test('remove the Food category', () => {
+		store.dispatch(Actions.remove('Food'));
 
-		const category = store.getTodoCategories();
-		expect(category).toHaveLength(0);
+		const { categories } = store.getState();
+
+		for (let key of Object.keys(categories.byTitle)) {
+			expect(key).not.toBe('Food');
+		}
 	});
+});
 
-	test('renaming a category', () => {
-		store.dispatchAction(Actions.add(myCategory));
-		store.dispatchAction(Actions.rename(myCategory.text, 'Fun'));
+describe('Test renaming a category', () => {
+	test('Rename School to Homework', () => {
+		store.dispatch(Actions.rename('School', 'Homework'));
 
-		const category = store.getTodoCategories();
-		expect(category[0].text).toBe('Fun');
+		const { categories, todos } = store.getState();
+		const catNames = Object.keys(categories.byTitle);
+
+		for (let [key, val] of Object.entries(todos.byTitle)) {
+			expect(val.category).not.toBe('School');
+		}
+
+		for (let name of catNames) {
+			expect(['Homework', 'Work']).toContain(name);
+		}
 	});
+});
 
-	test('change color of category', () => {
-		// the category title was changed from the previous test
-		store.dispatchAction(Actions.changeColor('Fun', 'purple'));
+describe('Test changing category color', () => {
+	test('Change color from blue to orange', () => {
+		store.dispatch(Actions.changeColor('Homework', 'orange'));
 
-		const category = store.getTodoCategories();
-		expect(category[0].color).toBe('purple');
-	})
+		const { categories } = store.getState();
+		const homeworkCat = categories.byTitle['Homework'];
+
+		expect(homeworkCat.color).toBe('orange');
+	});
 });
