@@ -1,8 +1,8 @@
+import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation';
-import { Today } from './screens/today';
+import Today from './screens/today';
 import Category from './screens/category';
 import NewTodoScreen from './screens/newitem';
-import React from 'react';
 import {
 	Button,
 } from 'react-native';
@@ -36,6 +36,9 @@ const tabNavigator = TabNavigator({
 	List: {
 		screen: Category,
 	},
+},
+{
+	initialRouteName: 'Today'
 });
 
 
