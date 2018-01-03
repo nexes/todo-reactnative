@@ -14,9 +14,10 @@ import {
 export class NewTodoScreen extends React.Component {
 	constructor(props) {
 		super(props);
+		let categoryKeys = Object.keys(this.props.categories);
 
 		this.state = {
-			categoryList: this.props.categories,
+			categoryList: categoryKeys,
 			dueDate: new Date(),
 			category: '',
 			todoText: '',
@@ -67,7 +68,7 @@ export class NewTodoScreen extends React.Component {
 
 		if (this.state.todoText !== '') {
 			this.props.newTodoItem({
-				text: this.state.todoText,
+				title: this.state.todoText,
 				category: this.state.category,
 				due: this.state.dueDate,
 				note: this.state.noteText,

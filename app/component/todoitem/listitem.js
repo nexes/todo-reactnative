@@ -57,7 +57,6 @@ export default class TodoItem extends React.PureComponent {
 }
 
 
-
 TodoItem.propTypes = {
 	index: PropTypes.number.isRequired,
 	value: PropTypes.string.isRequired,

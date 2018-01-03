@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { TodoAction } from '../../store/store';
 import { Today } from './today';
@@ -20,5 +21,11 @@ function mapDispatchToProps(dispatch) {
 		}
 	};
 }
+
+Today.propTypes = {
+	todos: PropTypes.object.isRequired,
+	completeTodo: PropTypes.func.isRequired,
+	initStoreTodos: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Today);

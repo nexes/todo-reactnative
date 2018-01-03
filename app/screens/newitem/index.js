@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { TodoAction } from '../../store/store';
 import { NewTodoScreen } from './newitem';
@@ -20,5 +21,10 @@ function mapDispatchToProps(dispatch) {
 		},
 	};
 }
+
+NewTodoScreen.propTypes = {
+	categories: PropTypes.object.isRequired,
+	newTodoItem: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewTodoScreen);

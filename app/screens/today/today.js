@@ -1,6 +1,6 @@
 import React from 'react';
 import { Styles } from './style';
-import { store, TodoAction } from '../../store/store';
+import { TodoAction } from '../../store/store';
 import { TimeAndTitle } from '../../component/titlecard';
 import { AddTodoButton } from '../../component/button';
 import { TodoItem } from '../../component/todoitem';
