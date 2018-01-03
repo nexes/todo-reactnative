@@ -3,8 +3,14 @@ import { ActionType as CategoryAction } from '../action/categoryaction';
 import { ActionType as TodoAction } from '../action/todoaction';
 
 
+//	TODO refactor this switch statement into smaller functions
 function categoryByTitle(prevState = {}, action) {
 	switch (action.type) {
+		case CategoryAction.INIT_CATEGORY:
+			return {
+				...action.store
+			};
+
 		case CategoryAction.ADD_CATEGORY:
 			return {
 				...prevState,

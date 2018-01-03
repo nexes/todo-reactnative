@@ -3,8 +3,14 @@ import { ActionType as TodoAction } from '../action/todoaction';
 import { ActionType as CategoryAction } from '../action/categoryaction';
 
 
+//	TODO: refactor these switch statements into seperate functions.
 function todoItemByTitle(prevState = {}, action) {
 	switch (action.type) {
+		case TodoAction.INIT_TODO:
+			return {
+				...action.store,
+			};
+
 		case TodoAction.ADD_TODO:
 			return {
 				...prevState,
@@ -17,7 +23,7 @@ function todoItemByTitle(prevState = {}, action) {
 			};
 
 		case TodoAction.REMOVE_TODO:
-			let keys = Object.keys(prevState)
+			let keys = Object.keys(prevState);
 
 			return keys.reduce((result, current) => {
 				if (action.title !== current) {

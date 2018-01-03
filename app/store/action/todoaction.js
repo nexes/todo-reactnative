@@ -1,4 +1,5 @@
 export const ActionType = {
+	INIT_TODO: 'init_todo',
 	ADD_TODO: 'add_todo',
 	REMOVE_TODO: 'remove_todo',
 	COMPLETE_TODO: 'complete_todo',
@@ -6,6 +7,19 @@ export const ActionType = {
 	DATE_SET_TODO: 'duedate_todo',
 };
 
+
+
+/**
+ * initalize our todo items from the saved state on the device.
+ * @param {object} store the todo object to save into redux
+ * @returns {action} the action object used by the reducers
+ */
+export function init(store) {
+	return {
+		type: ActionType.INIT_TODO,
+		store,
+	};
+}
 
 /**
  * add a new todo item to the store

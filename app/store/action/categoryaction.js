@@ -1,10 +1,23 @@
 export const ActionType = {
+	INIT_CATEGORY: 'init_category',
 	ADD_CATEGORY: 'add_category',
 	REMOVE_CATEGORY: 'remove_category',
 	RENAME_CATEGORY: 'rename_category',
 	COLOR_CATEGORY: 'color_category',
 };
 
+
+/**
+ * initalize our category data from the saved state on the devie into our redux store
+ * @param {object} store our category object from our device
+ * @returns {action} the action for the reducer
+ */
+export function init(store) {
+	return {
+		type: ActionType.INIT_CATEGORY,
+		store,
+	};
+}
 
 /**
  * add a new category action
