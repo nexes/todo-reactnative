@@ -9,21 +9,29 @@ export default class App extends React.Component {
 	constructor(props) {
 		super(props);
 
+		this.storeIsDirty = false;
+		this.unsubscribe = store.subscribe(() => this.storeIsDirty = true);
+
+		this.appStateChange = this.appStateChange.bind(this);
 		AppState.addEventListener('change', this.appStateChange);
 	}
 
-	async componentWillUnmount() {
-		let { todos, categories } = store.getState();
-
-		await AsyncStorage.setItem('todo', JSON.stringify(todos.byTitle));
-		await AsyncStorage.setItem('cateogry', JSON.stringify(categories.byTitle));
+	componentWillUnmount() {
+		this.unsubscribe();
 	}
 
 	//	TODO
-	appStateChange(state) {
+	async appStateChange(state) {
 		switch (state) {
 			case 'background':
-				console.log('app is now in the background');
+				if (this.storeIsDirty) {
+					let { todos, categories } = store.getState();
+
+					await AsyncStorage.setItem('todo', JSON.stringify(todos.byTitle));
+					await AsyncStorage.setItem('cateogry', JSON.stringify(categories.byTitle));
+
+					this.storeIsDirty = false;
+				}
 				break;
 
 			case 'active':
