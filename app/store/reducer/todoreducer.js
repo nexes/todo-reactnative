@@ -34,12 +34,13 @@ function todoItemByTitle(prevState = {}, action) {
 			}, {});
 
 
+		//	this will toggle the completed state
 		case TodoAction.COMPLETE_TODO:
 			return {
 				...prevState,
 				[action.title]: {
 					...prevState[action.title],
-					completed: true
+					completed: !prevState[action.title].completed
 				}
 			};
 
