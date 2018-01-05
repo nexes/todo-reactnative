@@ -17,45 +17,49 @@ export class Today extends React.Component {
 		super(props);
 
 		this.state = {
-			todoTitles: []
+			todos: []
 		};
 
+		this.addTodoItem = this.addTodoItem.bind(this);
 		this.listItemRender = this.listItemRender.bind(this);
 		this.todoListItemChange = this.todoListItemChange.bind(this);
 		this.todoListItemComplete = this.todoListItemComplete.bind(this);
-		this.addTodoItem = this.addTodoItem.bind(this);
+		this.createStateFromProps = this.createStateFromProps.bind(this);
 	}
 
-	//	we need to read our store from disk and load it into redux, just once
+	createStateFromProps(newState) {
+		const keys = Object.keys(newState);
+
+		return keys.reduce((prevState, current) => {
+			prevState.push({
+				title: current,
+				category: newState[current].category,
+				completed: newState[current].completed
+			});
+
+			return prevState;
+		}, []);
+	}
+
+	//	lets read any saved store data from disk
 	async componentDidMount() {
 		try {
 			const todos = await AsyncStorage.getItem('todo');
-			this.props.initStoreTodos(JSON.parse(todos));
 
-			this.setState(() => {
-				return {
-					todoTitles: Object.keys(this.props.todos)
-				};
-			});
+			if (todos) {
+				this.props.initStoreTodos(JSON.parse(todos));
+			}
 
 		} catch (e) {
 			console.log('error retrieving store from device ', e);
 		}
 	}
 
-	shouldComponentUpdate(nextProps, nextState) {
-		return Object.keys(this.props.todos).length !== Object.keys(nextProps.todos).length;
-	}
-
 	componentWillReceiveProps(nextProps) {
-		const currTodos = Object.keys(this.props.todos);
-		const nextTodos = Object.keys(nextProps.todos);
-
-		if (currTodos.length !== nextTodos.length) {
-			console.log('we are updating our state from props');
+		if (nextProps) {
 			this.setState(() => {
 				return {
-					todoTitles: nextTodos
+					todos: this.createStateFromProps(nextProps.todos)
 				};
 			});
 		}
@@ -77,7 +81,8 @@ export class Today extends React.Component {
 		return (
 			<TodoItem
 				index={index}
-				value={item}
+				value={item.title}
+				completed={item.completed}
 				valueChange={this.todoListItemChange}
 				checkBoxChange={this.todoListItemComplete}
 			/>
@@ -90,14 +95,13 @@ export class Today extends React.Component {
 	}
 
 	render() {
-		console.log('render');
 		return (
 			<SafeAreaView style={Styles.container}>
 				<TimeAndTitle style={Styles.todayCard} showTime={true} title='My Day'/>
 				<AddTodoButton style={Styles.addButton} addEvent={this.addTodoItem}/>
 				<KeyboardAvoidingView behavior='padding' style={Styles.ListContainer}>
 					<FlatList
-						data={this.state.todoTitles}
+						data={this.state.todos}
 						extraData={this.state}
 						keyExtractor={this.listItemKey}
 						renderItem={this.listItemRender}
