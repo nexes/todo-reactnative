@@ -11,27 +11,16 @@ export default class Checkbox extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			isFinished: false,
-		};
-
 		this.toggleActive = this.toggleActive.bind(this);
 	}
 
 	toggleActive() {
 		let { onCheckEvent } = this.props;
-
-		this.setState((prevState) => {
-			return {
-				isFinished: !prevState.isFinished,
-			};
-		});
-
 		if (onCheckEvent) onCheckEvent();
 	}
 
 	render() {
-		let icon = this.state.isFinished ?
+		let icon = this.props.checked ?
 			require('../../images/todoCheck.png') :
 			require('../../images/todoNoCheck.png');
 
@@ -48,4 +37,5 @@ export default class Checkbox extends React.Component {
 
 Checkbox.propTypes = {
 	onCheckEvent: PropTypes.func,
+	checked: PropTypes.bool.isRequired,
 };
