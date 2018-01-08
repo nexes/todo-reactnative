@@ -8,10 +8,6 @@ import {
 
 
 export default class CategoryItem extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-
 	render() {
 		return (
 			<View style={[style.container, {borderLeftColor: this.props.color}]}>
