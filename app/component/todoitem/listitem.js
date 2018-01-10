@@ -9,21 +9,6 @@ import {
 
 
 export default class TodoItem extends React.PureComponent {
-	constructor(props) {
-		super(props);
-
-		this.itemEdit = this.itemEdit.bind(this);
-		this.checkBoxSelect = this.checkBoxSelect.bind(this);
-	}
-
-	itemEdit(text) {
-		this.props.valueChange(text, this.props.index);
-	}
-
-	checkBoxSelect() {
-		this.props.checkBoxChange(this.props.value);
-	}
-
 	render() {
 		let textStyle = !this.props.completed ?
 			Style.todoText :
@@ -31,7 +16,10 @@ export default class TodoItem extends React.PureComponent {
 
 		return (
 			<View style={[ Style.container, this.props.style ]}>
-				<Checkbox onCheckEvent={this.checkBoxSelect} checked={this.props.completed}/>
+				<Checkbox
+					onCheckEvent={() => { this.props.checkBoxChange(this.props.value); }}
+					checked={this.props.completed}
+				/>
 				<TextInput
 					style={textStyle}
 					value={this.props.value}
@@ -39,7 +27,7 @@ export default class TodoItem extends React.PureComponent {
 					editable={!this.props.completed}
 					autoCapitalize='none'
 					autoCorrect={false}
-					onChangeText={this.itemEdit}
+					onChangeText={(text) => { this.props.valueChange(text, this.props.index);}}
 				/>
 			</View>
 		);
