@@ -28,7 +28,7 @@ export default class App extends React.Component {
 					let { todos, categories } = store.getState();
 
 					await AsyncStorage.setItem('todo', JSON.stringify(todos.byTitle));
-					await AsyncStorage.setItem('cateogry', JSON.stringify(categories.byTitle));
+					await AsyncStorage.setItem('category', JSON.stringify(categories.byTitle));
 
 					this.storeIsDirty = false;
 				}

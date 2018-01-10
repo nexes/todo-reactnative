@@ -11,8 +11,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		addCategory: (title) => {
-			dispatch(CategoryAction.add(title));
+		initStore: (category) => {
+			dispatch(CategoryAction.init(category));
 		}
 	};
 }

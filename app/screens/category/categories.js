@@ -8,6 +8,7 @@ import {
 	Text,
 	FlatList,
 	KeyboardAvoidingView,
+	AsyncStorage
 } from 'react-native';
 
 
@@ -42,8 +43,17 @@ export class Categories extends React.Component {
 		}
 	}
 
-	componentDidMount() {
-		this.updateStateFromProps(this.props);
+	async componentDidMount() {
+		try {
+			const categories = await AsyncStorage.getItem('category');
+
+			if (categories) {
+				this.props.initStore(JSON.parse(categories));
+			}
+
+		} catch (e) {
+			console.log('Error retreiving category data from storage: ', e);
+		}
 	}
 
 	componentWillReceiveProps(nextProps) {
