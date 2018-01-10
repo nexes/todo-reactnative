@@ -51,7 +51,8 @@ export class Categories extends React.Component {
 	}
 
 	addCategoryItem() {
-		//	TODO need to display a window to create a new category
+		const { navigate } = this.props.navigation;
+		navigate('AddCategory');
 	}
 
 	listKeyItem(item, index) {
