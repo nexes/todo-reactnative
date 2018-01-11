@@ -14,10 +14,9 @@ import {
 export class NewTodoScreen extends React.Component {
 	constructor(props) {
 		super(props);
-		let categoryKeys = Object.keys(this.props.categories);
 
 		this.state = {
-			categoryList: categoryKeys,
+			categoryList: [],
 			dueDate: new Date(),
 			category: '',
 			todoText: '',
@@ -29,6 +28,14 @@ export class NewTodoScreen extends React.Component {
 		this.updateNote = this.updateNote.bind(this);
 		this.addNewItem = this.addNewItem.bind(this);
 		this.updateCategory = this.updateCategory.bind(this);
+	}
+
+	componentDidMount() {
+		this.setState(() => {
+			return {
+				categoryList: Object.keys(this.props.categories)
+			};
+		});
 	}
 
 	updateText(text) {
@@ -80,7 +87,7 @@ export class NewTodoScreen extends React.Component {
 
 	render() {
 		let pickerItem = this.state.categoryList.map((category, index) => {
-			return <Picker.Item key={index} value={category.text} label={category.text} />;
+			return <Picker.Item key={index} value={category} label={category} />;
 		});
 
 		return (
@@ -95,7 +102,7 @@ export class NewTodoScreen extends React.Component {
 					multiline={false}
 					editable={true}
 				/>
-				<Text style={Style.label}>Due date</Text>
+				<Text style={Style.label}>Due</Text>
 				<DatePickerIOS
 					date={this.state.dueDate}
 					onDateChange={this.updateDate}
@@ -110,7 +117,7 @@ export class NewTodoScreen extends React.Component {
 					{pickerItem}
 				</Picker>
 
-				<Text style={Style.label}>Add a note</Text>
+				<Text style={Style.label}>Notes</Text>
 				<TextInput
 					style={Style.todoNote}
 					value={this.todoText}
