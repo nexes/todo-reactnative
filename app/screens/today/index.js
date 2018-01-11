@@ -15,9 +15,11 @@ function mapDispatchToProps(dispatch) {
 		completeTodo: (title) => {
 			dispatch(TodoAction.complete(title));
 		},
-
 		initStoreTodos: (todos) => {
 			dispatch(TodoAction.init(todos));
+		},
+		removeTodo: (title) => {
+			dispatch(TodoAction.remove(title));
 		}
 	};
 }

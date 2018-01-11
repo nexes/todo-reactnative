@@ -22,9 +22,9 @@ export class Today extends React.Component {
 
 		this.addTodoItem = this.addTodoItem.bind(this);
 		this.listItemRender = this.listItemRender.bind(this);
-		this.todoListItemChange = this.todoListItemChange.bind(this);
 		this.todoListItemComplete = this.todoListItemComplete.bind(this);
 		this.createStateFromProps = this.createStateFromProps.bind(this);
+		this.todoListItemLongPress = this.todoListItemLongPress.bind(this);
 	}
 
 	createStateFromProps(newState) {
@@ -65,12 +65,22 @@ export class Today extends React.Component {
 		}
 	}
 
-	todoListItemChange(text, index) {
-		//	TODO
-	}
-
 	todoListItemComplete(value) {
 		this.props.completeTodo(value);
+	}
+
+	todoListItemLongPress(action, value) {
+		switch (action) {
+			case 'EDIT':
+				break;
+
+			case 'REMOVE':
+				this.props.removeTodo(value);
+				break;
+
+			default:
+				return;
+		}
 	}
 
 	listItemKey(item, index) {
@@ -83,8 +93,8 @@ export class Today extends React.Component {
 				index={index}
 				value={item.title}
 				completed={item.completed}
-				valueChange={this.todoListItemChange}
 				checkBoxChange={this.todoListItemComplete}
+				onLongPress={this.todoListItemLongPress}
 			/>
 		);
 	}
