@@ -62,6 +62,20 @@ function todoItemByTitle(prevState = {}, action) {
 				}
 			};
 
+		case TodoAction.UPDATE_TITLE_TODO:
+			let renameKeys = Object.keys(prevState);
+
+			return renameKeys.reduce((newState, current) => {
+				if (current === action.title) {
+					newState[action.newTitle] = prevState[current]
+
+				} else {
+					newState[current] = prevState[current];
+				}
+
+				return newState;
+			}, {});
+
 		case CategoryAction.REMOVE_CATEGORY:
 			let todoKeys = Object.keys(prevState);
 
@@ -100,4 +114,4 @@ function todoItemByTitle(prevState = {}, action) {
 
 export const todoReducers = combineReducers({
 	byTitle: todoItemByTitle
-})
+});
