@@ -15,6 +15,15 @@ function mapDispatchToProps(dispatch) {
 		newTodoItem: (obj) => {
 			dispatch(TodoAction.add(obj));
 		},
+		updateTodoTitle: (oldTitle, newTitle, todoObj) => {
+			dispatch(TodoAction.updateTitle(oldTitle, newTitle));
+		},
+		updateTodoCategory: (todoTitle, newCategory) => {
+			dispatch(TodoAction.category(todoTitle, newCategory));
+		},
+		updateTodoNote: (todoTitle, note) => {
+			dispatch(TodoAction.updateNote(todoTitle, note));
+		}
 	};
 }
 

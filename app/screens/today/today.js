@@ -72,6 +72,10 @@ export class Today extends React.Component {
 	todoListItemLongPress(action, value) {
 		switch (action) {
 			case 'EDIT':
+				const { navigate } = this.props.navigation;
+				const todo = this.props.todos[value];
+
+				navigate('AddItem', {editItem: true, title: value, category: todo['category'], note: todo['note']});
 				break;
 
 			case 'REMOVE':
@@ -101,7 +105,7 @@ export class Today extends React.Component {
 
 	addTodoItem() {
 		let { navigate } = this.props.navigation;
-		navigate('AddItem');
+		navigate('AddItem', {editItem: false});
 	}
 
 	render() {

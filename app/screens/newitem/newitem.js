@@ -14,13 +14,14 @@ import {
 export class NewTodoScreen extends React.Component {
 	constructor(props) {
 		super(props);
+		const { params } = this.props.navigation.state;
 
 		this.state = {
-			categoryList: [],
+			categoryList: Object.keys(this.props.categories),
 			dueDate: new Date(),
-			category: '',
-			todoText: '',
-			noteText: '',
+			category: params.category || '',
+			todoText: params.title || '',
+			noteText: params.note || '',
 		};
 
 		this.updateText = this.updateText.bind(this);
@@ -28,14 +29,6 @@ export class NewTodoScreen extends React.Component {
 		this.updateNote = this.updateNote.bind(this);
 		this.addNewItem = this.addNewItem.bind(this);
 		this.updateCategory = this.updateCategory.bind(this);
-	}
-
-	componentDidMount() {
-		this.setState(() => {
-			return {
-				categoryList: Object.keys(this.props.categories)
-			};
-		});
 	}
 
 	updateText(text) {
@@ -71,15 +64,25 @@ export class NewTodoScreen extends React.Component {
 	}
 
 	addNewItem() {
-		let { navigation } = this.props;
+		const { navigation } = this.props;
+		const { params } = this.props.navigation.state;
 
 		if (this.state.todoText !== '') {
-			this.props.newTodoItem({
-				title: this.state.todoText,
-				category: this.state.category,
-				due: this.state.dueDate,
-				note: this.state.noteText,
-			});
+			if (!params.editItem) {
+				this.props.newTodoItem({
+					title: this.state.todoText,
+					category: this.state.category,
+					due: this.state.dueDate,
+					note: this.state.noteText,
+				});
+
+			} else {
+				const { params } = this.props.navigation.state;
+
+				if (params.category !== this.state.category) this.props.updateTodoCategory(params.title, this.state.category);
+				if (params.note !== this.state.noteText) this.props.updateTodoNote(params.title, this.state.noteText);
+				if (params.title !== this.state.todoText) this.props.updateTodoTitle(params.title, this.state.todoText);
+			}
 		}
 
 		navigation.goBack();
@@ -120,7 +123,7 @@ export class NewTodoScreen extends React.Component {
 				<Text style={Style.label}>Notes</Text>
 				<TextInput
 					style={Style.todoNote}
-					value={this.todoText}
+					value={this.state.noteText}
 					autoCapitalize='sentences'
 					onChangeText={this.updateNote}
 					multiline={true}
