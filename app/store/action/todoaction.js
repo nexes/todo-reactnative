@@ -5,7 +5,8 @@ export const ActionType = {
 	COMPLETE_TODO: 'complete_todo',
 	CATEGORY_SET_TODO: 'category_todo',
 	DATE_SET_TODO: 'duedate_todo',
-	UPDATE_TITLE_TODO: 'update_title_todo'
+	UPDATE_TITLE_TODO: 'update_title_todo',
+	UPDATE_NOTE_TODO: 'update_note_todo',
 };
 
 
@@ -104,5 +105,20 @@ export function updateTitle(oldTitle, newTitle) {
 		type: ActionType.UPDATE_TITLE_TODO,
 		title: oldTitle,
 		newTitle: newTitle,
+	};
+}
+
+
+/**
+ * update the todo notes
+ * @param {string}	title	the title of the todo
+ * @param {string}	note the new note for the todo
+ * @returns {action}	the action for the reducer
+ */
+export function updateNote(title, note) {
+	return {
+		type: ActionType.UPDATE_NOTE_TODO,
+		title,
+		note,
 	};
 }

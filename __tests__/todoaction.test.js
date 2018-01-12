@@ -88,3 +88,14 @@ describe('Test renaming a todo title', () => {
 		expect(items).toEqual(expect.arrayContaining(['learn to code']));
 	});
 });
+
+describe('Test changing todo note', () => {
+	test('Change the note of \'learn to code\' to \'testing notes\'', () => {
+		store.dispatch(TodoAction.updateNote('learn to code', 'testing notes'));
+
+		const { todos } = store.getState()
+		const todoItem = todos.byTitle['learn to code'];
+
+		expect(todoItem.note).toBe('testing notes');
+	});
+});

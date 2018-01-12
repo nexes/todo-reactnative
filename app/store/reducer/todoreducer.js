@@ -62,6 +62,15 @@ function todoItemByTitle(prevState = {}, action) {
 				}
 			};
 
+		case TodoAction.UPDATE_NOTE_TODO:
+			return {
+				...prevState,
+				[action.title]: {
+					...prevState[action.title],
+					note: action.note
+				}
+			};
+
 		case TodoAction.UPDATE_TITLE_TODO:
 			let renameKeys = Object.keys(prevState);
 
