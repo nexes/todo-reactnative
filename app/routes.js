@@ -4,7 +4,10 @@ import Today from './screens/today';
 import Category from './screens/category';
 import NewTodoScreen from './screens/newitem';
 import NewCategoryScreen from './screens/newcategory';
-import { Button } from 'react-native';
+import {
+	Button,
+	Image
+} from 'react-native';
 
 
 const myDayNavigator = StackNavigator({
@@ -54,13 +57,23 @@ const categoryNavigator = StackNavigator({
 const tabNavigator = TabNavigator({
 	Today: {
 		screen: myDayNavigator,
+		navigationOptions: () => ({
+			tabBarIcon: () => (
+				<Image source={require('./images/todo-tab-icon.png')} />
+			),
+		}),
 	},
-	List: {
+	Category: {
 		screen: categoryNavigator,
+		navigationOptions: () => ({
+			tabBarIcon: () => (
+				<Image source={require('./images/category-tab-icon.png')} />
+			),
+		}),
 	},
 },
 {
-	initialRouteName: 'Today'
+	initialRouteName: 'Today',
 });
 
 
