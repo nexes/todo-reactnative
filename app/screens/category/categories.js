@@ -22,6 +22,8 @@ export class Categories extends React.Component {
 
 		this.updateStateFromProps = this.updateStateFromProps.bind(this);
 		this.addCategoryItem = this.addCategoryItem.bind(this);
+		this.categoryItemLongPress = this.categoryItemLongPress.bind(this);
+		this.listRenderItem = this.listRenderItem.bind(this);
 	}
 
 	updateStateFromProps(nextProps) {
@@ -62,7 +64,22 @@ export class Categories extends React.Component {
 
 	addCategoryItem() {
 		const { navigate } = this.props.navigation;
-		navigate('AddCategory');
+		navigate('AddCategory', {editItem: false});
+	}
+
+	categoryItemLongPress(action, itemName) {
+		switch (action) {
+			case 'REMOVE':
+				this.props.removeCategory(itemName);
+				break;
+
+			case 'EDIT':
+				const { navigate } = this.props.navigation;
+				const category = this.props.categories[itemName];
+
+				navigate('AddCategory', { editItem: true, title: itemName, color: category.color });
+				break;
+		}
 	}
 
 	listKeyItem(item, index) {
@@ -71,7 +88,12 @@ export class Categories extends React.Component {
 
 	listRenderItem({ item }) {
 		return (
-			<CategoryItem value={item.title} color={item.color} count={item.count}/>
+			<CategoryItem
+				value={item.title}
+				color={item.color}
+				count={item.count}
+				categoryLongPress={this.categoryItemLongPress}
+			/>
 		);
 	}
 

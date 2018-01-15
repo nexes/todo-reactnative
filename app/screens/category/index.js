@@ -13,6 +13,9 @@ function mapDispatchToProps(dispatch) {
 	return {
 		initStore: (category) => {
 			dispatch(CategoryAction.init(category));
+		},
+		removeCategory: (category) => {
+			dispatch(CategoryAction.remove(category));
 		}
 	};
 }

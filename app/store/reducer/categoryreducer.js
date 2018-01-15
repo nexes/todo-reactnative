@@ -32,11 +32,12 @@ function categoryByTitle(prevState = {}, action) {
 			}, {});
 
 		case CategoryAction.RENAME_CATEGORY:
-			keys = Object.keys(prevState);
+			let renameKey = Object.keys(prevState);
 
-			return keys.reduce((newState, current) => {
-				if (action.title === current) {
+			return renameKey.reduce((newState, current) => {
+				if (current === action.title) {
 					newState[action.newTitle] = prevState[current];
+
 				} else {
 					newState[current] = prevState[current];
 				}

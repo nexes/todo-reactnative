@@ -14,9 +14,11 @@ export class NewCategoryScreen extends React.Component {
 	constructor(props) {
 		super(props);
 
+		const { params } = this.props.navigation.state;
+
 		this.state = {
-			title: '',
-			color: 'black'
+			title: params.title || '',
+			color: params.color || 'black'
 		};
 
 		this.titleTextChange = this.titleTextChange.bind(this);
@@ -33,7 +35,6 @@ export class NewCategoryScreen extends React.Component {
 	}
 
 	colorSelected(color) {
-		console.log('color selected ', color);
 		this.setState(() => {
 			return {
 				color: color
@@ -43,9 +44,19 @@ export class NewCategoryScreen extends React.Component {
 
 	addCategory() {
 		const { goBack } = this.props.navigation;
+		const { params } = this.props.navigation.state;
 
 		if (this.state.title.length > 1) {
-			this.props.addCategory(this.state.title, this.state.color);
+			if (!params.editItem) {
+				this.props.addCategory(this.state.title, this.state.color);
+
+			} else {
+				if (params.color !== this.state.color)
+					this.props.changeColor(params.title, this.state.color);
+
+				if (params.title !== this.state.title)
+					this.props.renameCategory(params.title, this.state.title);
+			}
 		}
 
 		goBack();
