@@ -19,8 +19,7 @@ export class Settings extends React.Component {
 		this.state = {
 			completedFlag: false,
 			notifyFlag: false,
-		};
-
+		}
 		this.data = [
 			{ data: [{ name: 'Show finished tasks' }], title: 'List Items' },
 			{ data: [{ name: 'Color' }], title: 'Theme' },
@@ -28,7 +27,6 @@ export class Settings extends React.Component {
 		];
 
 		this.renderRow = this.renderRow.bind(this);
-		this.toggleFlag = this.toggleFlag.bind(this);
 	}
 
 	//	TODO we need to abstract all AsyncStorage calls.

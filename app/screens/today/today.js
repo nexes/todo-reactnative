@@ -18,7 +18,6 @@ export class Today extends React.Component {
 
 		this.state = {
 			todos: [],
-			showCompleted: false,
 		};
 
 		this.addTodoItem = this.addTodoItem.bind(this);
@@ -47,10 +46,7 @@ export class Today extends React.Component {
 	async componentDidMount() {
 		try {
 			const todos = await AsyncStorage.getItem('todo');
-			const visible = await AsyncStorage.getItem('showComplete');
-
 			if (todos) this.props.initStoreTodos(JSON.parse(todos));
-			if (visible) this.setState({ showCompleted: JSON.parse(visible) });
 
 		} catch (e) {
 			console.log('error retrieving store from device ', e);
@@ -92,17 +88,15 @@ export class Today extends React.Component {
 	listItemRender({ item, index }) {
 		//	TODO we are saving the settings option to not show completed, we just need to read it
 		//	better than this. We can do that when we abstract our AsyncStorage calls
-		if (!item.completed && !this.state.showCompleted) {
-			return (
-				<TodoItem
-					index={index}
-					value={item.title}
-					completed={item.completed}
-					checkBoxChange={this.todoListItemComplete}
-					onLongPress={this.todoListItemLongPress}
-				/>
-			);
-		}
+		return (
+			<TodoItem
+				index={index}
+				value={item.title}
+				completed={item.completed}
+				checkBoxChange={this.todoListItemComplete}
+				onLongPress={this.todoListItemLongPress}
+			/>
+		);
 	}
 
 	addTodoItem() {
