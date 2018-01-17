@@ -8,7 +8,7 @@ import {
 	FlatList,
 	KeyboardAvoidingView,
 	SafeAreaView,
-	AsyncStorage
+	AsyncStorage,
 } from 'react-native';
 
 
@@ -17,7 +17,7 @@ export class Today extends React.Component {
 		super(props);
 
 		this.state = {
-			todos: []
+			todos: [],
 		};
 
 		this.addTodoItem = this.addTodoItem.bind(this);
@@ -46,9 +46,8 @@ export class Today extends React.Component {
 		try {
 			const todos = await AsyncStorage.getItem('todo');
 
-			if (todos) {
+			if (todos)
 				this.props.initStoreTodos(JSON.parse(todos));
-			}
 
 		} catch (e) {
 			console.log('error retrieving store from device ', e);
@@ -87,10 +86,6 @@ export class Today extends React.Component {
 		}
 	}
 
-	listItemKey(item, index) {
-		return index;
-	}
-
 	listItemRender({ item, index }) {
 		return (
 			<TodoItem
@@ -117,8 +112,8 @@ export class Today extends React.Component {
 					<FlatList
 						data={this.state.todos}
 						extraData={this.state}
-						keyExtractor={this.listItemKey}
 						renderItem={this.listItemRender}
+						keyExtractor={(item, index) => index}
 					/>
 				</KeyboardAvoidingView>
 			</SafeAreaView>
