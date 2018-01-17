@@ -3,6 +3,7 @@ import { TimeAndTitle } from '../../component/titlecard';
 import { Header } from '../../component/header';
 import { Style } from './style';
 import {
+	AsyncStorage,
 	SafeAreaView,
 	SectionList,
 	Text,
@@ -30,12 +31,19 @@ export class Settings extends React.Component {
 		this.toggleFlag = this.toggleFlag.bind(this);
 	}
 
-	toggleFlag(flag, value) {
-		if (flag === 'complete') {
-			this.setState({ completedFlag: value });
+	//	TODO we need to abstract all AsyncStorage calls.
+	async toggleFlag(flag, value) {
+		try {
+			if (flag === 'complete') {
+				await AsyncStorage.setItem('showComplete', JSON.stringify(value));
+				this.setState({ completedFlag: value });
 
-		} else if (flag === 'notify') {
-			this.setState({ notifyFlag: value });
+			} else if (flag === 'notify') {
+				//	TODO save notification to AsyncStorage
+				this.setState({ notifyFlag: value });
+			}
+		} catch (e) {
+			console.log('Settings async save ', e);
 		}
 	}
 
@@ -53,6 +61,7 @@ export class Settings extends React.Component {
 				</View>
 			);
 
+			//	TODO pick the color of the top bar
 		} else if (section.title === 'Theme') {
 			return (
 				<View style={Style.colorItemView}>
@@ -75,10 +84,6 @@ export class Settings extends React.Component {
 		}
 	}
 
-	renderHeader({ section }) {
-		return <Header title={section.title} />;
-	}
-
 	render() {
 		return (
 			<SafeAreaView style={Style.container}>
@@ -87,7 +92,7 @@ export class Settings extends React.Component {
 					<SectionList
 						keyExtractor={(item, index) => index}
 						renderItem={this.renderRow}
-						renderSectionHeader={this.renderHeader}
+						renderSectionHeader={({ section }) => <Header title={section.title} />}
 						sections={this.data}
 					/>
 				</View>
