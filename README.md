@@ -16,9 +16,9 @@ _This application is still under development._ Here is what still needs to be do
 5. Android
 	* test using Android simulator, we have only been focusing on iOS
 
-![](https://imgur.com/teMVOUb)
-![](https://imgur.com/fgAZOJB)
-![](https://imgur.com/wvCgHa4)
-![](https://imgur.com/Fzqicxi)
+![s1](https://imgur.com/teMVOUb.png) | ![s2](https://imgur.com/fgAZOJB.png)
+--|--
+![s3](https://imgur.com/wvCgHa4.png) | ![s4](https://imgur.com/Fzqicxi.png)
 
-### Copyright (c) 2016 Joe Berria
+
+### Copyright (c) 2018 Joe Berria
