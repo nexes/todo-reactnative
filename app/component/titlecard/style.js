@@ -7,7 +7,8 @@ export const Styles = StyleSheet.create({
 	},
 	text: {
 		color: 'white',
-		fontSize: 28,
+		// fontSize: 28,
+		fontSize: 32,
 		paddingLeft: 20,
 		top: '65%',
 	},

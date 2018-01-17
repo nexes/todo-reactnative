@@ -87,15 +87,17 @@ export class Today extends React.Component {
 	}
 
 	listItemRender({ item, index }) {
-		return (
-			<TodoItem
-				index={index}
-				value={item.title}
-				completed={item.completed}
-				checkBoxChange={this.todoListItemComplete}
-				onLongPress={this.todoListItemLongPress}
-			/>
-		);
+		if (!item.completed) {
+			return (
+				<TodoItem
+					index={index}
+					value={item.title}
+					completed={item.completed}
+					checkBoxChange={this.todoListItemComplete}
+					onLongPress={this.todoListItemLongPress}
+				/>
+			);
+		}
 	}
 
 	addTodoItem() {

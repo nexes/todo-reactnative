@@ -4,6 +4,7 @@ import Today from './screens/today';
 import Category from './screens/category';
 import NewTodoScreen from './screens/newitem';
 import NewCategoryScreen from './screens/newcategory';
+import Settings from './screens/settings';
 import {
 	Button,
 	Image
@@ -54,6 +55,7 @@ const categoryNavigator = StackNavigator({
 });
 
 
+
 const tabNavigator = TabNavigator({
 	Today: {
 		screen: myDayNavigator,
@@ -68,6 +70,14 @@ const tabNavigator = TabNavigator({
 		navigationOptions: () => ({
 			tabBarIcon: () => (
 				<Image source={require('./images/category-tab-icon.png')} />
+			),
+		}),
+	},
+	Settings: {
+		screen: Settings,
+		navigationOptions: () => ({
+			tabBarIcon: () => (
+				<Image source={require('./images/settings-tab-icon.png')} />
 			),
 		}),
 	},
