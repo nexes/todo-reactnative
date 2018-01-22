@@ -7,6 +7,7 @@ import { Today } from './today';
 function mapStateToProps(state) {
 	return {
 		todos: state.todos.byTitle,
+		showCompleted: state.ui.bySetting.visible
 	};
 }
 

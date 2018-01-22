@@ -86,17 +86,17 @@ export class Today extends React.Component {
 	}
 
 	listItemRender({ item, index }) {
-		//	TODO we are saving the settings option to not show completed, we just need to read it
-		//	better than this. We can do that when we abstract our AsyncStorage calls
-		return (
-			<TodoItem
-				index={index}
-				value={item.title}
-				completed={item.completed}
-				checkBoxChange={this.todoListItemComplete}
-				onLongPress={this.todoListItemLongPress}
-			/>
-		);
+		if (this.props.showCompleted || !item.completed) {
+			return (
+				<TodoItem
+					index={index}
+					value={item.title}
+					completed={item.completed}
+					checkBoxChange={this.todoListItemComplete}
+					onLongPress={this.todoListItemLongPress}
+				/>
+			);
+		}
 	}
 
 	addTodoItem() {

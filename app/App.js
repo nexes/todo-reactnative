@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { AppState, AsyncStorage } from 'react-native';
-import { store, TodoAction, CategoryAction } from './store/store';
+import { store } from './store/store';
 import { Navigation } from './routes';
 
 
@@ -25,10 +25,11 @@ export default class App extends React.Component {
 		switch (state) {
 			case 'background':
 				if (this.storeIsDirty) {
-					let { todos, categories } = store.getState();
+					let { todos, categories, ui } = store.getState();
 
 					await AsyncStorage.setItem('todo', JSON.stringify(todos.byTitle));
 					await AsyncStorage.setItem('category', JSON.stringify(categories.byTitle));
+					await AsyncStorage.setItem('setting', JSON.stringify(ui.bySetting));
 
 					this.storeIsDirty = false;
 				}

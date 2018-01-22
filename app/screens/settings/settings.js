@@ -3,7 +3,6 @@ import { TimeAndTitle } from '../../component/titlecard';
 import { Header } from '../../component/header';
 import { Style } from './style';
 import {
-	AsyncStorage,
 	SafeAreaView,
 	SectionList,
 	Text,
@@ -16,10 +15,6 @@ export class Settings extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			completedFlag: false,
-			notifyFlag: false,
-		}
 		this.data = [
 			{ data: [{ name: 'Show finished tasks' }], title: 'List Items' },
 			{ data: [{ name: 'Color' }], title: 'Theme' },
@@ -29,19 +24,15 @@ export class Settings extends React.Component {
 		this.renderRow = this.renderRow.bind(this);
 	}
 
-	//	TODO we need to abstract all AsyncStorage calls.
-	async toggleFlag(flag, value) {
+	async componentDidMount() {
 		try {
-			if (flag === 'complete') {
-				await AsyncStorage.setItem('showComplete', JSON.stringify(value));
-				this.setState({ completedFlag: value });
+			const settings = await AsyncStorage.getItem('setting');
 
-			} else if (flag === 'notify') {
-				//	TODO save notification to AsyncStorage
-				this.setState({ notifyFlag: value });
-			}
+			if (settings)
+				this.props.initStore(JSON.parse(settings));
+
 		} catch (e) {
-			console.log('Settings async save ', e);
+			console.log('Error reading settings from redux ', e);
 		}
 	}
 
@@ -53,8 +44,8 @@ export class Settings extends React.Component {
 					<Text style={Style.listItemText}>{item.name}</Text>
 					<Switch
 						style={Style.toggleSwitch}
-						value={this.state.completedFlag}
-						onValueChange={(v) => this.toggleFlag('complete', v)}
+						value={this.props.visible}
+						onValueChange={(v) => this.props.changeVisibility(v)}
 					/>
 				</View>
 			);
@@ -64,7 +55,7 @@ export class Settings extends React.Component {
 			return (
 				<View style={Style.colorItemView}>
 					<Text style={Style.listItemText}>{item.name}</Text>
-					<Text style={{ alignSelf: 'flex-end', fontSize: 12 }}>color</Text>
+					<Text style={{ alignSelf: 'flex-end', fontSize: 12 }}>{this.props.color}</Text>
 				</View>
 			);
 
@@ -74,8 +65,8 @@ export class Settings extends React.Component {
 					<Text style={Style.listItemText}>{item.name}</Text>
 					<Switch
 						style={Style.toggleSwitch}
-						value={this.state.notifyFlag}
-						onValueChange={(v) => this.toggleFlag('notify', v)}
+						value={false} //TODO
+						// onValueChange={(v) => this.toggleFlag('notify', v)} //TDOD
 					/>
 				</View>
 			);
