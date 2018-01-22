@@ -1,6 +1,8 @@
 import { createStore, combineReducers } from 'redux';
 import { todoReducers } from './reducer/todoreducer';
 import { categoryReducer } from './reducer/categoryreducer';
+import { settingReducer } from './reducer/settingreducer';
+import * as settingAction from './action/settingaction';
 import * as todActions from './action/todoaction';
 import * as categoryAction from './action/categoryaction';
 
@@ -29,14 +31,25 @@ const initialState = {
 				...
 			*/
 		}
+	},
+	ui: {
+		bySetting: {
+			/*
+				visible: boolean,
+				theme: color
+				notifcation: TODO
+			*/
+		}
 	}
 };
 
 export const store = createStore(combineReducers({
 	todos: todoReducers,
 	categories: categoryReducer,
+	ui: settingReducer,
 }), initialState);
 
 
 export { todActions as TodoAction };
 export { categoryAction as CategoryAction };
+export { settingAction as SettingAction };
